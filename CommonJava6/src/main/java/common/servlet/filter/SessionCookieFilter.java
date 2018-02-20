@@ -11,17 +11,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * <pre>
- * Java 7 이상은 불필요
- *  - web.xml 설정
- *  	&ltsession-config&gt
- *  		&ltcookie-config&gt
- *  			&lthttp-only&gttrue&lt/http-only&gt
- *  		&lt/cookie-config&gt
- *  	&lt/session-config&gt
- * </pre>
- */
 public class SessionCookieFilter implements Filter {
 
 	@Override
@@ -39,7 +28,7 @@ public class SessionCookieFilter implements Filter {
 		/** Cookie Hijacking 방지 */
 		String sessionid = request.getSession().getId();
 		response.setHeader("Set-Cookie", "JSESSIONID=" + sessionid + "; Path=/; HttpOnly");
-
+		
 		chain.doFilter(req, res);
 	}
 
