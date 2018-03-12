@@ -33,7 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * HttpClient version 4.3 Standard
+ * HttpClient version 4.4 Standard
  */
 public class HttpClientUtil {
 
