@@ -22,7 +22,7 @@ public class PropertiesUtil {
 	
 	private static final Logger logger = LoggerFactory.getLogger(PropertiesUtil.class);
 
-	private static final String PROP_CLASS_PATH = "/properties" + FileUtil.FOLDER_SEPARATOR;
+	private static final String PROP_CLASS_PATH = "properties" + FileUtil.FOLDER_SEPARATOR;
 	private static final String PROP_WEB_INF_PATH = "/WEB-INF" +  FileUtil.FOLDER_SEPARATOR + "properties/";
 	
 	/**

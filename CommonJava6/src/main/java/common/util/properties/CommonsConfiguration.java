@@ -26,7 +26,6 @@ public class CommonsConfiguration {
 	 */
 	public CommonsConfiguration(int type, String propFileName) {
 		Configurations configs = new Configurations();
-
 		try {
 			String sPath = "";
 			
@@ -45,7 +44,7 @@ public class CommonsConfiguration {
 			config = builder.getConfiguration();
 
 		} catch (ConfigurationException e) {
-			logger.error("CommonsConfiguration ConfigurationException", e);
+			logger.error("", e);
 		}		
 	}
 	
@@ -67,7 +66,7 @@ public class CommonsConfiguration {
 		try {
 			builder.save();
 		} catch (ConfigurationException e) {
-			logger.error("save ConfigurationException", e);
+			logger.error("", e);
 		}
 	}
 
