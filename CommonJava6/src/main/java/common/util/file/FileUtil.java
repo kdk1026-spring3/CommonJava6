@@ -353,12 +353,17 @@ public class FileUtil {
 	public static List<String> getFileList(String filePath) {
 		List<String> listFiles = new ArrayList<String>();
 		File file = new File(filePath);
-		File[] files = file.listFiles();
 		
-		for (File f : files) {
-			if (f.isFile()) {
-				listFiles.add(f.getName());
+		if (file.isDirectory()) {
+			File[] files = file.listFiles();
+			
+			for (File f : files) {
+				if (f.isFile()) {
+					listFiles.add(f.getName());
+				}
 			}
+		} else {
+			listFiles.add(file.getName());
 		}
 		
 		return listFiles;
@@ -372,11 +377,14 @@ public class FileUtil {
 	public static List<String> getDirectoryList(String filePath) {
 		List<String> listDirectories = new ArrayList<String>();
 		File file = new File(filePath);
-		File[] files = file.listFiles();
 		
-		for (File f : files) {
-			if (f.isDirectory()) {
-				listDirectories.add(f.getName());
+		if (file.isDirectory()) {
+			File[] files = file.listFiles();
+			
+			for (File f : files) {
+				if (f.isDirectory()) {
+					listDirectories.add(f.getName());
+				}
 			}
 		}
 		
