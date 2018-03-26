@@ -354,12 +354,9 @@ public class JodaTimeDateUtil {
 		 * @return
 		 */
 		public static int intervalYears(String strFixDate) {
-			DateTime startDate = DateTime.parse(strFixDate, DateTimeFormat.forPattern(YYYYMMDD));
-			
-			String strDate = DateTime.now().toString(YYYYMMDD);
-			DateTime endDate = DateTime.parse(strDate, DateTimeFormat.forPattern(YYYYMMDD));
-			
-			return Years.yearsBetween(startDate, endDate).toPeriod().getYears();
+			DateTime fixDate = DateTime.parse(strFixDate, DateTimeFormat.forPattern(YYYYMMDD));
+			DateTime targetDate = DateTime.now();
+			return Years.yearsBetween(targetDate, fixDate).toPeriod().getYears();
 		}
 		
 		/**
@@ -369,12 +366,9 @@ public class JodaTimeDateUtil {
 		 * @return
 		 */
 		public static int intervalMonths(String strFixDate) {
-			DateTime startDate = DateTime.parse(strFixDate, DateTimeFormat.forPattern(YYYYMMDD));
-			
-			String strDate = DateTime.now().toString(YYYYMMDD);
-			DateTime endDate = DateTime.parse(strDate, DateTimeFormat.forPattern(YYYYMMDD));
-			
-			return Months.monthsBetween(startDate, endDate).toPeriod().getMonths();
+			DateTime fixDate = DateTime.parse(strFixDate, DateTimeFormat.forPattern(YYYYMMDD));
+			DateTime targetDate = DateTime.now();
+			return Months.monthsBetween(targetDate, fixDate).toPeriod().getMonths();
 		}
 		
 		/**
@@ -384,12 +378,9 @@ public class JodaTimeDateUtil {
 		 * @return
 		 */
 		public static int intervalDays(String strFixDate) {
-			DateTime startDate = DateTime.parse(strFixDate, DateTimeFormat.forPattern(YYYYMMDD));
-			
-			String strDate = DateTime.now().toString(YYYYMMDD);
-			DateTime endDate = DateTime.parse(strDate, DateTimeFormat.forPattern(YYYYMMDD));
-			
-			return Days.daysBetween(startDate, endDate).toPeriod().getDays();
+			DateTime fixDate = DateTime.parse(strFixDate, DateTimeFormat.forPattern(YYYYMMDD));
+			DateTime targetDate = DateTime.now();
+			return Days.daysBetween(targetDate, fixDate).toPeriod().getDays();
 		}
 	}
 	
@@ -409,12 +400,9 @@ public class JodaTimeDateUtil {
 		 * @return
 		 */
 		public static int intervalHours(String strFixDate) {
-			DateTime startDate = DateTime.parse(strFixDate, DateTimeFormat.forPattern(YYYYMMDDHHMMSS));
-			
-			String strDate = DateTime.now().toString(YYYYMMDDHHMMSS);
-			DateTime endDate = DateTime.parse(strDate, DateTimeFormat.forPattern(YYYYMMDDHHMMSS));
-			
-			return Hours.hoursBetween(startDate, endDate).toPeriod().getHours();
+			DateTime fixTime = DateTime.parse(strFixDate, DateTimeFormat.forPattern(YYYYMMDDHHMMSS));
+			DateTime targetTime = DateTime.now();
+			return Hours.hoursBetween(targetTime, fixTime).toPeriod().getHours();
 		}
 		
 		/**
@@ -424,12 +412,9 @@ public class JodaTimeDateUtil {
 		 * @return
 		 */
 		public static int intervalMinutes(String strFixDate) {
-			DateTime startDate = DateTime.parse(strFixDate, DateTimeFormat.forPattern(YYYYMMDDHHMMSS));
-			
-			String strDate = DateTime.now().toString(YYYYMMDDHHMMSS);
-			DateTime endDate = DateTime.parse(strDate, DateTimeFormat.forPattern(YYYYMMDDHHMMSS));
-			
-			return Minutes.minutesBetween(startDate, endDate).toPeriod().getMinutes();
+			DateTime fixTime = DateTime.parse(strFixDate, DateTimeFormat.forPattern(YYYYMMDDHHMMSS));
+			DateTime targetTime = DateTime.now();
+			return Minutes.minutesBetween(targetTime, fixTime).toPeriod().getMinutes();
 		}
 		
 		/**
@@ -439,12 +424,9 @@ public class JodaTimeDateUtil {
 		 * @return
 		 */
 		public static int intervalSeconds(String strFixDate) {
-			DateTime startDate = DateTime.parse(strFixDate, DateTimeFormat.forPattern(YYYYMMDDHHMMSS));
-			
-			String strDate = DateTime.now().toString(YYYYMMDDHHMMSS);
-			DateTime endDate = DateTime.parse(strDate, DateTimeFormat.forPattern(YYYYMMDDHHMMSS));
-			
-			return Seconds.secondsBetween(startDate, endDate).toPeriod().getSeconds();
+			DateTime fixTime = DateTime.parse(strFixDate, DateTimeFormat.forPattern(YYYYMMDDHHMMSS));
+			DateTime targetTime = DateTime.now();
+			return Seconds.secondsBetween(targetTime, fixTime).toPeriod().getSeconds();
 		}		
 	}
 	
@@ -463,8 +445,7 @@ public class JodaTimeDateUtil {
 		 * @return
 		 */
 		public static int getDayOfWeek() {
-			DateTime dt = DateTime.now();
-			return dt.getDayOfWeek();
+			return DateTime.now().getDayOfWeek();
 		}
 		
 		/**
@@ -483,7 +464,6 @@ public class JodaTimeDateUtil {
 		 */
 		public static int getFirstDayOfWeek() {
 			String strDate = DateTime.now().toString("yyyyMM01");
-			
 			DateTime dt = DateTime.parse(strDate, DateTimeFormat.forPattern(YYYYMMDD));
 			return dt.getDayOfWeek();
 		}
@@ -494,28 +474,29 @@ public class JodaTimeDateUtil {
 		 * @return
 		 */
 		public static int getFirstDayOfWeek(String strDate) {
-			DateTime dt = DateTime.parse(strDate, DateTimeFormat.forPattern(YYYYMMDD)).withDayOfMonth(1);
-			return dt.getDayOfWeek();
+			DateTime dt = DateTime.parse(strDate, DateTimeFormat.forPattern(YYYYMMDD));
+			return dt.withDayOfMonth(1).getDayOfWeek();
 		}
 		
 		/**
-		 * 현재 날짜의 한글 요일 구하기
-		 * @param strDate
+		 * 현재 날짜의 로케일 요일 구하기
+		 * @param locale
 		 * @return
 		 */
-		public static String getKorDayOfWeek() {
+		public static String getDayOfWeekLocale(Locale locale) {
 			DateTime dt = DateTime.now();
-			return DateTimeFormat.forPattern("E").withLocale(Locale.KOREA).print(dt);
+			return DateTimeFormat.forPattern("E").withLocale(locale).print(dt);
 		}
 
 		/**
 		 * yyyyMMdd 형식의 String 타입 날짜의 한글 요일 구하기
 		 * @param strDate
+		 * @param locale
 		 * @return
 		 */
-		public static String getKorDayOfWeek(String strDate) {
+		public static String getDayOfWeekLocale(String strDate, Locale locale) {
 			DateTime dt = DateTime.parse(strDate, DateTimeFormat.forPattern(YYYYMMDD));
-			return DateTimeFormat.forPattern("E").withLocale(Locale.KOREA).print(dt);
+			return DateTimeFormat.forPattern("E").withLocale(locale).print(dt);
 		}
 	}
 	
@@ -533,8 +514,7 @@ public class JodaTimeDateUtil {
 		 * @return
 		 */
 		public static int getLastDayOfMonth() {
-			DateTime dt = DateTime.now();
-			return dt.dayOfMonth().getMaximumValue();
+			return DateTime.now().dayOfMonth().getMaximumValue();
 		}
 		
 		/**
@@ -546,6 +526,11 @@ public class JodaTimeDateUtil {
 			DateTime dt = DateTime.parse(strDate, DateTimeFormat.forPattern(YYYYMMDD));
 			return dt.dayOfMonth().getMaximumValue();
 		}
+	}
+	
+	public static void main(String[] args) {
+		int n = GetDayOfMonth.getLastDayOfMonth();
+		System.out.println(n);
 	}
 	
 }
