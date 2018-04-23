@@ -17,7 +17,7 @@ public class DBEncodingUtil {
 	}
 	
 	private static final String ISO_8859_1 = Charset.forName("8859_1").toString();
-	private static final String EUC_KR = Charset.forName("euc-kr").toString();
+	private static final String MS949 = Charset.forName("ms949").toString();
 	private static final String UTF_8 = Charset.forName("utf-8").toString();
 
 	public static class US7ASCII {
@@ -36,7 +36,7 @@ public class DBEncodingUtil {
 			public static String readHangeul(String val) {
 				String sVal = "";
 				try {
-					sVal = new String(val.getBytes(ISO_8859_1), EUC_KR);
+					sVal = new String(val.getBytes(ISO_8859_1), MS949);
 				} catch (UnsupportedEncodingException e) {
 					logger.error("", e);
 				}
@@ -119,7 +119,7 @@ public class DBEncodingUtil {
 					val1 = String.valueOf(map.get(key));
 					
 					try {
-						val2 = new String(val1.getBytes(EUC_KR), ISO_8859_1);
+						val2 = new String(val1.getBytes(MS949), ISO_8859_1);
 						
 					} catch (UnsupportedEncodingException e) {
 						logger.error("", e);
