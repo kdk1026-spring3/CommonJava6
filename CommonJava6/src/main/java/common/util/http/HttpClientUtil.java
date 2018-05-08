@@ -14,6 +14,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -55,6 +56,8 @@ public class HttpClientUtil {
 	public static final String BODY_KEY = "body";
 	public static final String HEADERS_KEY = "headers";
 	
+	private static final int TIMEOUT = 5;
+	
 	/**
 	 * <pre>
 	 * SSL의 경우, 제한된 네트워크 환경에서는 불가
@@ -85,6 +88,14 @@ public class HttpClientUtil {
 		return httpClient;
 	}
 	
+	private static RequestConfig getConfigWithTimeout(int timeoutInMilliseconds) {
+		return RequestConfig.custom()
+                .setSocketTimeout(timeoutInMilliseconds)
+                .setConnectTimeout(timeoutInMilliseconds)
+                .setConnectionRequestTimeout(timeoutInMilliseconds)
+                .build();
+	}
+	
 	public static class GetRequest {
 		private GetRequest() {
 			super();
@@ -110,6 +121,7 @@ public class HttpClientUtil {
 				
 			} else {
 				HttpGet httpGet = new HttpGet(url);
+				httpGet.setConfig(getConfigWithTimeout(TIMEOUT));
 				
 				if (header != null) {
 			        Iterator<String> it = header.keySet().iterator();
@@ -198,6 +210,7 @@ public class HttpClientUtil {
 				
 			} else {
 				HttpPost httpPost = new HttpPost(url);
+				httpPost.setConfig(getConfigWithTimeout(TIMEOUT));
 				
 				if (header != null) {
 			        Iterator<String> it = header.keySet().iterator();
@@ -296,6 +309,7 @@ public class HttpClientUtil {
 			} else {
 				String contentType = (isJson) ? "application/json" : "application/xml";
 				HttpPost httpPost = new HttpPost(url);
+				httpPost.setConfig(getConfigWithTimeout(TIMEOUT));
 				
 				if (header != null) {
 			        Iterator<String> it = header.keySet().iterator();
@@ -380,6 +394,7 @@ public class HttpClientUtil {
 				
 			} else {
 				HttpPost httpPost = new HttpPost(url);
+				httpPost.setConfig(getConfigWithTimeout(TIMEOUT));
 				
 				if (header != null) {
 			        Iterator<String> it = header.keySet().iterator();
