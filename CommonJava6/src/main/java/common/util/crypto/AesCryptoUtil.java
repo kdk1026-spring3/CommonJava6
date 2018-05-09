@@ -63,7 +63,7 @@ public class AesCryptoUtil {
 			byte[] textBytes = cipher.doFinal(strPlainText.getBytes(CHARSET));
 			strEncryptText = DatatypeConverter.printBase64Binary(textBytes);
 		} catch (Exception e) {
-			logger.error("aesEncrypt Exception", e);
+			logger.error("", e);
 		}
 		return strEncryptText;
 	}
@@ -88,7 +88,7 @@ public class AesCryptoUtil {
 			byte[] textBytes = DatatypeConverter.parseBase64Binary(strEncryptText);
 			strDecryptText = new String(cipher.doFinal(textBytes), CHARSET);
 		} catch (Exception e) {
-			logger.error("aesDecrypt Exception", e);
+			logger.error("", e);
 		}
 		return strDecryptText;
 	}

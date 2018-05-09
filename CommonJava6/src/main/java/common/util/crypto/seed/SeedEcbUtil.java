@@ -7,6 +7,14 @@ import javax.xml.bind.DatatypeConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * <pre>
+ * SEED ECB 암호화
+ * 
+ * - 암호화 키
+ * > 128비트(16자)
+ * </pre>
+ */
 public class SeedEcbUtil {
 	
 	private SeedEcbUtil() {
