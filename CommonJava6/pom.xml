@@ -14,9 +14,6 @@
 		<!-- Web -->
 		<servlet.version>2.5</servlet.version>
 
-		<!-- Spring -->
-		<spring-framework.version>3.2.18.RELEASE</spring-framework.version>
-
 		<!-- Logging -->
 		<logback.version>1.1.9</logback.version>
 		<slf4j.version>1.7.25</slf4j.version>
@@ -71,15 +68,6 @@
 			</exclusions>
 		</dependency>
 	
-<!-- Spring -->
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
-		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-webmvc</artifactId>
-		    <version>${spring-framework.version}</version>
-		</dependency>
-<!-- // Spring -->
-		
 <!-- Apache -->
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
 		<dependency>
@@ -285,12 +273,6 @@
 
 <!-- Test -->
 		<!-- Test Artifacts -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${spring-framework.version}</version>
-			<scope>test</scope>
-		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
