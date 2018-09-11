@@ -588,11 +588,11 @@ public class JodaTimeDateUtil {
 		
 		/**
 		 * timestamp to DateTime
-		 * @param mills
+		 * @param timestamp (sec)
 		 * @return
 		 */
 		public static DateTime timestampToDateTime(long timestamp) {
-			return new DateTime(timestamp * 1000);
+			return millsToDateTime(timestamp * 1000);
 		}
 		
 	}
