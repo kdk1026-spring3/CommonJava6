@@ -3,7 +3,8 @@ package common.util;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.Base64;
+
+import javax.xml.bind.DatatypeConverter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,25 +20,27 @@ public class EncodeUtil {
 	/**
 	 * <pre>
 	 * Base64 인코딩
-	 *   - java 8
+	 *   - commons.codec
+	 *     > new String(Base64.encodeBase64(plain.getBytes()))
 	 * </pre>
 	 * @param binaryData
 	 * @return
 	 */
 	public static String encodeBase64(byte[] binaryData) {
-		return Base64.getEncoder().encodeToString(binaryData);
+		return DatatypeConverter.printBase64Binary(binaryData);
 	}
 
 	/**
 	 * <pre>
 	 * Base64 디코딩
-	 *   - java 8
+	 *   - commons.codec
+	 *     > new String(Base64.decodeBase64(encoded.getBytes()))
 	 * </pre>
 	 * @param binaryData
 	 * @return
 	 */
 	public static byte[] decodeBase64(String base64Data) {
-		return Base64.getDecoder().decode(base64Data);
+		return DatatypeConverter.parseBase64Binary(base64Data);
 	}
 
 	/**
