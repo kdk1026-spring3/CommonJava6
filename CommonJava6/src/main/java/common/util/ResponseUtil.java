@@ -2,7 +2,7 @@ package common.util;
 
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +18,7 @@ public class ResponseUtil {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ResponseUtil.class);
 
-	private static final String UTF8 = StandardCharsets.UTF_8.toString();
+	private static final String UTF8 = Charset.forName("UTF-8").toString();
 	
 	/**
 	 * <pre>
@@ -41,7 +41,7 @@ public class ResponseUtil {
 			}
 			
 		} catch (Exception e) {
-			logger.error("contentDisposition Exception", e);
+			logger.error("", e);
 		}
 		
 		return sRes;
