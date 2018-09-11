@@ -17,7 +17,7 @@ public class CommonsConfiguration {
 	private static final Logger logger = LoggerFactory.getLogger(CommonsConfiguration.class);
 	
 	private static final String PROP_CLASS_PATH = "/properties" + FileUtil.FOLDER_SEPARATOR;
-	private static final String PROP_WEB_INF_PATH = "/WEB-INF" +  FileUtil.FOLDER_SEPARATOR + "properties" + FileUtil.FOLDER_SEPARATOR;
+	private static final String PROP_WEB_INF_PATH = "/WEB-INF" + FileUtil.FOLDER_SEPARATOR + "properties/";
 	
 	private FileBasedConfigurationBuilder<PropertiesConfiguration> builder;
 	private Configuration config;
@@ -29,6 +29,7 @@ public class CommonsConfiguration {
 	 */
 	public CommonsConfiguration(int type, HttpServletRequest request, String propFileName) {
 		Configurations configs = new Configurations();
+
 		try {
 			String sPath = "";
 			
@@ -43,13 +44,12 @@ public class CommonsConfiguration {
 			default:
 				break;
 			}
-			logger.debug("{}", sPath);
 
 			builder = configs.propertiesBuilder(sPath);
 			config = builder.getConfiguration();
 
 		} catch (ConfigurationException e) {
-			logger.error("", e);
+			logger.error("CommonsConfiguration ConfigurationException", e);
 		}		
 	}
 	
@@ -71,7 +71,7 @@ public class CommonsConfiguration {
 		try {
 			builder.save();
 		} catch (ConfigurationException e) {
-			logger.error("", e);
+			logger.error("save ConfigurationException", e);
 		}
 	}
 

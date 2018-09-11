@@ -3,8 +3,7 @@ package common.util;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-
-import javax.xml.bind.DatatypeConverter;
+import java.util.Base64;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,27 +19,25 @@ public class EncodeUtil {
 	/**
 	 * <pre>
 	 * Base64 인코딩
-	 *   - commons.codec
-	 *     > new String(Base64.encodeBase64(plain.getBytes()))
+	 *   - java 8
 	 * </pre>
 	 * @param binaryData
 	 * @return
 	 */
 	public static String encodeBase64(byte[] binaryData) {
-		return DatatypeConverter.printBase64Binary(binaryData);
+		return Base64.getEncoder().encodeToString(binaryData);
 	}
 
 	/**
 	 * <pre>
 	 * Base64 디코딩
-	 *   - commons.codec
-	 *     > new String(Base64.decodeBase64(encoded.getBytes()))
+	 *   - java 8
 	 * </pre>
 	 * @param binaryData
 	 * @return
 	 */
 	public static byte[] decodeBase64(String base64Data) {
-		return DatatypeConverter.parseBase64Binary(base64Data);
+		return Base64.getDecoder().decode(base64Data);
 	}
 
 	/**
@@ -58,7 +55,7 @@ public class EncodeUtil {
 		try {
 			sRes = URLEncoder.encode(sPlain, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			logger.error("urlEncode UnsupportedEncodingException", e);
+			logger.error("", e);
 		}
 		return sRes;
 	}
@@ -78,7 +75,7 @@ public class EncodeUtil {
 		try {
 			sRes = URLEncoder.encode(sPlain, sCharsetName);
 		} catch (UnsupportedEncodingException e) {
-			logger.error("urlEncode UnsupportedEncodingException", e);
+			logger.error("", e);
 		}
 		return sRes;
 	}
@@ -98,7 +95,7 @@ public class EncodeUtil {
 		try {
 			sRes = URLDecoder.decode(sEncodedData, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			logger.error("urlDecode UnsupportedEncodingException", e);
+			logger.error("", e);
 		}
 		return sRes;
 	}
@@ -118,7 +115,7 @@ public class EncodeUtil {
 		try {
 			sRes = URLDecoder.decode(sEncodedData, sCharsetName);
 		} catch (UnsupportedEncodingException e) {
-			logger.error("urlDecode UnsupportedEncodingException", e);
+			logger.error("", e);
 		}
 		return sRes;
 	}

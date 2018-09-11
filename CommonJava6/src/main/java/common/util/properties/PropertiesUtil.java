@@ -11,6 +11,7 @@ import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +26,7 @@ public class PropertiesUtil {
 	private static final Logger logger = LoggerFactory.getLogger(PropertiesUtil.class);
 
 	private static final String PROP_CLASS_PATH = "properties" + FileUtil.FOLDER_SEPARATOR;
-	private static final String PROP_WEB_INF_PATH = "/WEB-INF" +  FileUtil.FOLDER_SEPARATOR + "properties/";
+	private static final String PROP_WEB_INF_PATH = "/WEB-INF" + FileUtil.FOLDER_SEPARATOR + "properties/";
 	
 	/**
 	 * <pre>
@@ -37,9 +38,9 @@ public class PropertiesUtil {
 	 */
 	public static Properties getPropertiesClasspath(String propFileName) {
 		Properties prop = new Properties();
-		InputStream is = null;
 		String fileNmae = PROP_CLASS_PATH + propFileName;
 
+		InputStream is = null;
 		try {
 			is = PropertiesUtil.class.getClassLoader().getResourceAsStream(fileNmae);
 			prop.load(is);
@@ -47,13 +48,7 @@ public class PropertiesUtil {
 		} catch (IOException e) {
 			logger.error("", e);
 		} finally {
-			try {
-				if (is != null) {
-					is.close();
-				}
-			} catch (IOException e) {
-				logger.error("", e);
-			}
+			IOUtils.closeQuietly(is);
 		}
 		
 		return prop;
@@ -63,7 +58,7 @@ public class PropertiesUtil {
 	 * <pre>
 	 * WEB-INF의 Properties 로드
 	 *   - properties 파일 / properties xml 파일
-	 * </pre>
+	 * </pre> 
 	 * @param request
 	 * @param propFileName
 	 * @return
@@ -71,30 +66,20 @@ public class PropertiesUtil {
 	public static Properties getPropertiesWebInf(HttpServletRequest request, String propFileName) {
 		Properties prop = new Properties();
 		InputStream is = null;
-		FileInputStream fis = null;
 		
 		String webRootPath = request.getSession().getServletContext().getRealPath("/");
 		String fileNmae = webRootPath + PROP_WEB_INF_PATH + propFileName;
 		
+		FileInputStream fis = null;
 		try {
-			fis = new FileInputStream(fileNmae); 
+			fis = new FileInputStream(fileNmae);
 			is = new BufferedInputStream(fis);
 			prop.load(is);
 			
 		} catch (IOException e) {
 			logger.error("", e);
 		} finally {
-			try {
-				if (fis != null) {
-					fis.close();
-				}
-				
-				if (is != null) {
-					is.close();
-				}
-			} catch (IOException e) {
-				logger.error("", e);
-			}
+			IOUtils.closeQuietly(fis);
 		}
 		
 		return prop;
@@ -105,15 +90,14 @@ public class PropertiesUtil {
 	 * Properties 생성/덮어쓰기
 	 *   - Classpath의 경우 서버 리로드를 해야 반영되므로 생성/덮어쓰기 권장안함
 	 * </pre> 
-	 * @param propFileName
 	 * @param type (0: Classpath, 1 : WEB-INF)
 	 * @param request (Classpath 는 null)
+	 * @param propFileName
 	 * @param prop
 	 */
 	public static void saveProperties(int type, HttpServletRequest request, String propFileName, Properties prop) {
 		if ( (prop != null) && (!prop.isEmpty()) ) {
 			OutputStream os = null;
-			FileOutputStream fos = null;
 			
 			String fileNmae = "";
 			
@@ -129,6 +113,8 @@ public class PropertiesUtil {
 				break;
 			}
 			
+			FileOutputStream fos = null;
+			
 			try {
 				fos = new FileOutputStream(fileNmae);
 				os = new BufferedOutputStream(fos);
@@ -138,19 +124,8 @@ public class PropertiesUtil {
 			} catch (IOException e) {
 				logger.error("", e);
 			} finally {
-				try {
-					if (fos != null) {
-						fos.close();
-					}
-					
-					if (os != null) {
-						os.close();
-					}
-					
-				} catch (IOException e) {
-					logger.error("", e);
-				}
-			}				
+				IOUtils.closeQuietly(fos);
+			}
 		}
 	}
 	
