@@ -1,5 +1,7 @@
 package common.util.crypto;
 
+import java.nio.charset.Charset;
+
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
@@ -36,7 +38,7 @@ public class AesCryptoUtil {
 	private static final Logger logger = LoggerFactory.getLogger(AesCryptoUtil.class);
 	
 	private static final byte[] IV_BYTES = new byte[16];
-	private static final String CHARSET = "UTF-8";
+	private static final String CHARSET = Charset.forName("UTF-8").toString();
 	
 	public static final String AES_CBC_NOPADDING ="AES/CBC/NoPadding";
 	public static final String AES_CBC_PKCS5PADDING ="AES/CBC/PKCS5Padding";

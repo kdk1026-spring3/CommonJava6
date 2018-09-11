@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -48,7 +49,7 @@ public class RsaCryptoUtil {
 	
 	private static final Logger logger = LoggerFactory.getLogger(RsaCryptoUtil.class);
 
-	private static final String CHARSET = "UTF-8";
+	private static final String CHARSET = Charset.forName("UTF-8").toString();
 	
 	private static final int DEFAULT_KEY_SIZE = 2048;
 	private static final String KEY_FACTORY_ALGORITHM = "RSA";

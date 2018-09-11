@@ -1,6 +1,9 @@
 package common.util.crypto.seed;
 
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
 
 import javax.xml.bind.DatatypeConverter;
 
@@ -23,6 +26,8 @@ public class SeedEcbUtil {
 
 	private static final Logger logger = LoggerFactory.getLogger(SeedEcbUtil.class);
 
+	private static final String UTF_8 = Charset.forName("UTF-8").toString();
+	
 	/**
 	 * SEED ECB 암호화 (Base64 인코딩)
 	 * @param sPlainData
@@ -34,7 +39,7 @@ public class SeedEcbUtil {
 		String sEncData = "";
 		try {
 			byte[] bKey	= sKey.getBytes();
-			byte[] bCipher = new byte[50];
+			byte[] bCipher = null;
 			byte[] bData = sPlainData.getBytes();
 
 			bKey = setPadding(bKey, 16);
@@ -47,7 +52,35 @@ public class SeedEcbUtil {
 		}
 		return sEncData;
 	}
-
+	
+	/**
+	 * SEED ECB 암호화 (URL 인코딩 + Base64 인코딩)
+	 * @param sPlainData
+	 * @param sKey
+	 * @return
+	 * @throws IOException
+	 */
+	public static String seedUrlEnc(String sPlainData, String sKey) {
+		String sEncData = "";
+		try {
+			byte[] bKey	= sKey.getBytes();
+			byte[] bCipher = null;
+			byte[] bData = sPlainData.getBytes();
+			
+			bKey = setPadding(bKey, 16);
+			int nDataLen = bData.length;
+			bCipher = KISA_SEED_ECB.SEED_ECB_Encrypt(bKey, bData, 0, nDataLen);
+			
+			sEncData = DatatypeConverter.printBase64Binary(bCipher);
+			
+			sEncData = URLEncoder.encode(sEncData, UTF_8);
+			
+		} catch (Exception e) {
+			logger.error("", e);
+		}
+		return sEncData;
+	}
+	
 	/**
 	 * SEED ECB 복호화 (Base64 디코딩)
 	 * @param sEncData
@@ -59,8 +92,39 @@ public class SeedEcbUtil {
 		String sPlainData = "";
 		try {
 			byte[] bKey	= sKey.getBytes();
-			byte[] bCipher = new byte[50];
-			byte[] bPlain = new byte[16];
+			byte[] bCipher = null;
+			byte[] bPlain = null;
+			
+			bCipher = DatatypeConverter.parseBase64Binary(sEncData);
+			
+			bKey = setPadding(bKey, 16);
+			byte[] bData = bCipher;
+			int nDataLen = bData.length;
+			
+			bPlain = KISA_SEED_ECB.SEED_ECB_Decrypt(bKey, bCipher, 0, nDataLen);
+			sPlainData = new String(bPlain);
+			
+		} catch (Exception e) {
+			logger.error("", e);
+		}
+		return sPlainData;
+	}
+	
+	/**
+	 * SEED ECB 복호화 (URL 디코딩 + Base64 디코딩)
+	 * @param sEncData
+	 * @param sKey
+	 * @return
+	 * @throws IOException
+	 */
+	public static String seedUrlDec(String sEncData, String sKey) {
+		String sPlainData = "";
+		try {
+			sEncData = URLDecoder.decode(sEncData, UTF_8);
+			
+			byte[] bKey	= sKey.getBytes();
+			byte[] bCipher = null;
+			byte[] bPlain = null;
 			
 			bCipher = DatatypeConverter.parseBase64Binary(sEncData);
 			

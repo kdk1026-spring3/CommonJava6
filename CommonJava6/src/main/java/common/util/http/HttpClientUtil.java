@@ -47,9 +47,6 @@ public class HttpClientUtil {
 		super();
 	}
 	
-	/**
-	 * Java 1.6 Base 
-	 */
 	private static final String DEFAULT_CHARSET = Charset.forName("UTF-8").toString();
 	
 	public static final String STATUS_KEY = "status";
