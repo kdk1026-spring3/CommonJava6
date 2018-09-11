@@ -75,6 +75,16 @@ public class JodaTimeDateUtil {
 		public static String getStringDate(String strDate, String dateFormat) {
 			return DateTime.parse(strDate, DateTimeFormat.forPattern(YYYYMMDD)).toString(dateFormat);
 		}
+		
+		/**
+		 * yyyyMMddHHmmss 형식의 String 타입을 해당 포맷의 String 타입으로 반환
+		 * @param strDate
+		 * @param dateFormat
+		 * @return
+		 */
+		public static String getStringDateTime(String strDate, String dateFormat) {
+			return DateTime.parse(strDate, DateTimeFormat.forPattern(YYYYMMDDHHMMSS)).toString(dateFormat);
+		}
 	}
 
 	/**
@@ -119,6 +129,16 @@ public class JodaTimeDateUtil {
 		public static String getDateToString(Date date, String dateFormat) {
 			return DateTimeFormat.forPattern(dateFormat).print(date.getTime());
 		}		
+		
+		/**
+		 * DateTime 타입 객체를 해당 포맷의 String 타입으로 반환
+		 * @param dateTime
+		 * @param dateFormat
+		 * @return
+		 */
+		public static String getDateTimeToString(DateTime dateTime, String dateFormat) {
+			return dateTime.toString(dateFormat);
+		}
 	}
 	
 	/**
@@ -528,9 +548,53 @@ public class JodaTimeDateUtil {
 		}
 	}
 	
-	public static void main(String[] args) {
-		int n = GetDayOfMonth.getLastDayOfMonth();
-		System.out.println(n);
+	
+	/**
+	 * Unix Timestamp 
+	 */
+	public static class UnixTimestamp {
+
+		private UnixTimestamp() {
+			super();
+		}
+		
+		/**
+		 * System.currentTimeMillis() 동일하나 ms에 미세한 차이 있음
+		 * @return
+		 */
+		public static long currentMillis() {
+			return new DateTime().getMillis();
+		}
+		
+		/**
+		 * milliseconds to DateTime
+		 * @param mills
+		 * @return
+		 */
+		public static DateTime millsToDateTime(long mills) {
+			return new DateTime(mills);
+		}
+		
+		/**
+		 * <pre>
+		 * current Unix Timestamp
+		 * https://www.epochconverter.com/
+		 * </pre>
+		 * @return
+		 */
+		public static long getUnixTimestamp() {
+			return currentMillis() / 1000;
+		}
+		
+		/**
+		 * timestamp to DateTime
+		 * @param mills
+		 * @return
+		 */
+		public static DateTime timestampToDateTime(long timestamp) {
+			return new DateTime(timestamp * 1000);
+		}
+		
 	}
 	
 }

@@ -38,7 +38,7 @@ public class CookieUtilVer1 {
 			sb.append("; Path=").append(cookie.getPath());
 			sb.append("; HttpOnly");
 
-			response.setHeader("Set-Cookie", sb.toString());
+			response.addHeader("Set-Cookie", sb.toString());
 		}
 	}
 
