@@ -20,7 +20,7 @@ public class JodaTimeDateUtil {
 	}
 	
 	private static final String YYYYMMDD = "yyyyMMdd";
-	private static final String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
+	public static final String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
 
 	/**
 	 * 현재 날짜 및 시간 반환
