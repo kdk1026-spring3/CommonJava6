@@ -567,12 +567,13 @@ public class JodaTimeDateUtil {
 		}
 		
 		/**
-		 * milliseconds to DateTime
+		 * milliseconds to String
 		 * @param mills
 		 * @return
 		 */
-		public static DateTime millsToDateTime(long mills) {
-			return new DateTime(mills);
+		public static String millsToString(long mills) {
+			DateTime dateTime = new DateTime(mills); 
+			return dateTime.toString(YYYYMMDDHHMMSS);
 		}
 		
 		/**
@@ -587,12 +588,12 @@ public class JodaTimeDateUtil {
 		}
 		
 		/**
-		 * timestamp to DateTime
+		 * timestamp to String
 		 * @param timestamp (sec)
 		 * @return
 		 */
-		public static DateTime timestampToDateTime(long timestamp) {
-			return millsToDateTime(timestamp * 1000);
+		public static String timestampToString(long timestamp) {
+			return millsToString(timestamp * 1000);
 		}
 		
 	}
