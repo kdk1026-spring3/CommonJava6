@@ -1,5 +1,11 @@
 package common.util.sessioncookie;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,10 +41,20 @@ public class CookieUtilVer1 {
 			response.addCookie(cookie);
 		} 
 		else {
+			Date expireDate = new Date();
+			expireDate.setTime( expireDate.getTime() + (cookie.getMaxAge() * 1000) );
+
+			Locale locale = Locale.US;
+			DateFormat df = new SimpleDateFormat("EEE, dd-MMM-yyyy HH:mm:ss z", locale);
+			df.setTimeZone(TimeZone.getTimeZone("GMT"));
+			String cookieExpire = df.format(expireDate);
+
 			StringBuilder sb = new StringBuilder();
 			sb.append(cookie.getName());
 			sb.append("=").append(cookie.getValue());
-			sb.append("; Expires=").append(cookie.getMaxAge());;
+			sb.append("; Max-Age=").append(cookie.getMaxAge());
+			sb.append("; Expires=").append(cookieExpire);
+			sb.append("; Domain=").append(cookie.getDomain());
 			sb.append("; Path=").append(cookie.getPath());
 			sb.append("; HttpOnly");
 
